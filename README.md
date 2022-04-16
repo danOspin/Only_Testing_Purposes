@@ -8,3 +8,7 @@ Implementación en Python de un OTP, y consultado a través de micro-servicios
 ## Pre-requisitos
 
 
+´´´python
+def test ():
+pass
+```
