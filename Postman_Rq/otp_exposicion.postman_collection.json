@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "5e5a51cd-2c6f-4cf1-acf3-1ecf4aa79aed",
+		"name": "otp_exposicion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "generate_otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\":\"cdmurcia81543@umanizales.edu.co\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/generate_otp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"generate_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate_otp",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\":\"cdmurcia81543@umanizales.edu.co\",\n    \"otp\":\"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/validate_otp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"validate_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_otp",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\":\"cdmurcia81543@umanizales.edu.co\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/list_otp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"list_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "config_otp",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\":\"cdmurcia81543@umanizales.edu.co\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/config_otp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"config_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Document\":{\"email\":\"prueba155@umanizales.edu.co\",\"name\":\"Prueba54 prueba\",\"pasword\":123411,\"type\":\"test\"},\n    \"key\":\"email\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:5000",
+			"type": "string"
+		}
+	]
+}

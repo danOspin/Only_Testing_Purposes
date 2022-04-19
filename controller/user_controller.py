@@ -97,7 +97,6 @@ def validate_otp_per_user():
 
     #Si existe llamamos al generador de otp y mandamos id
     response = otp_service.generate_otp(data)
-
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')

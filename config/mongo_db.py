@@ -38,3 +38,12 @@ class MongoApi:
         documents = self.collection.find(filter)
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
+
+    def save_otp(self, data, message):
+        connection = MongoApi(self.data)
+        """key = data['key']
+            validation = connection.read_by_filter({key: data['Document'][key]})
+            if (len(validation) > 0):
+                raise Exception(message)"""
+        response = connection.write(data)
+        return response
