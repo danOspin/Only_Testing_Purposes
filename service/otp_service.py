@@ -3,7 +3,7 @@ from model.otp_object import OtpObject
 from flask import Response,Blueprint, json, request
 import datetime
 class OTPService():
-    time_limit = 60
+    time_limit = 180
     otp_size = 4
 
     def __init__(self):
@@ -21,8 +21,9 @@ class OTPService():
 
     def validate_otp(self, user,otp):
         connection = MongoApi(self.data)
-        connection.get_otp_number()
+        response = connection.otp_validation(user,datetime.datetime.utcnow(),otp)
         self.otp_object(user, self.time_limit, self.otp_size)
+#Aquí devolver 3 casos. vencido, incorrecto y correcto.
 
         #otp_json = self.otp_object.generate_otp(user,self.time_limit,self.otp_size)
         #response = connection.check_otp_number(otp_json, "Error al guardar en base de datos")
@@ -36,10 +37,14 @@ class OTPService():
         return response
 
     #traer lista de otp filtrado por usuario.
-    def check_status_otp(self, user):
+    def has_active_otp(self, user):
         connection = MongoApi(self.data)
-        has_valid_otp = connection.check_otp_number(user,datetime.datetime.utcnow())
-        return has_valid_otp
+        otp_object_obtained = connection.active_otp_per_user(user,datetime.datetime.utcnow())
+        if (otp_object_obtained==[]):
+            return False
+        else:
+            return True
+
 
     #encontrar otps de usuario seleccionado y traer el otp mayor a la fecha actual
     def find_latest_otp(self, user, otp):
@@ -53,12 +58,15 @@ class OTPService():
             return False
 
     def change_otp_values(self,data):
-        new_size = int(data['otp_size'])
-        new_time_limit = int(data['otp_size'])
+        if 'otp_size' in data:
+            new_size = int(data['otp_size'])
+        if 'time_limit' in data:
+            new_time_limit = int(data['time_limit'])
 
         if (new_size > 4):
-            self.otp_size = (data['otp_size'])
+            self.otp_size = new_size
 
         if (new_time_limit > 30 and new_time_limit < 86400):
-            self.otp_size = int(data['time_limit'])
+            self.time_limit = new_time_limit
+        return {'Message': 'Parameters for otp_size: {0} and for time_limit: {1}'.format(self.otp_size,self.time_limit)}
 

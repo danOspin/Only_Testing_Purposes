@@ -39,6 +39,7 @@ class OtpObject():
         otp_to_json['expiring_date'] = self.expiring_date
         otp_to_json['otp_pass'] = self.otp_pass
         otp_to_json['used'] = self.used
+        otp_to_json['type'] = "otp"
         return {'Document': otp_to_json}
 
     def utc_to_local(self, utc_dt):
