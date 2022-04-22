@@ -39,11 +39,31 @@ class MongoApi:
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
 
-    def save_otp(self, data, message):
+    def save_otp(self, data):
         connection = MongoApi(self.data)
-        """key = data['key']
-            validation = connection.read_by_filter({key: data['Document'][key]})
-            if (len(validation) > 0):
-                raise Exception(message)"""
         response = connection.write(data)
         return response
+
+    def check_otp_time(self, user, date):
+        connection = MongoApi(self.data)
+        response = connection.find({"$and": [{"user": user}, {"expiring_date": { "$gte" : date}}]})
+        return response
+
+    def check_otp_number(self, user, date):
+        documents = self.collection.find({"$and": [{"user_id": user}, {"expiring_date": { "$gte" : date}}]})
+        output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        print(date)
+        print(output)
+        if (output==[]):
+            return True
+        else:
+            return False
+
+    def get_otp_number(self, user, date):
+        documents = self.collection.find({"$and": [{"user": user}, {"expiring_date": { "$gte" : date}}]})
+        output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        print(output)
+        if (output!=[]):
+            return output['otp']
+        else:
+            return None

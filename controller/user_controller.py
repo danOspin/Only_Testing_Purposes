@@ -78,10 +78,11 @@ def generate_otp_per_user():
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
-    # Validamos que usuario exista
-
-    # Si existe llamamos al generador de otp y mandamos id
-    response = otp_service.generate_otp(data['user_id'])
+    # TODO: Validar que usuario exista
+    if (otp_service.check_status_otp(data['user_id'])):
+        response = otp_service.generate_otp(data['user_id'])
+    else:
+        response = {"message": "Ya hay otro otp generado"}
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
@@ -96,7 +97,10 @@ def validate_otp_per_user():
     #Validamos que usuario exista
 
     #Si existe llamamos al generador de otp y mandamos id
-    response = otp_service.generate_otp(data)
+    if (otp_service.check_status_otp(data['user_id'])==False):
+        response = otp_service.validate_otp(data['user_id'],data['otp'])
+    else:
+        response = {"message": "Se venció el tiempo, genere un nuevo OTP"}
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
