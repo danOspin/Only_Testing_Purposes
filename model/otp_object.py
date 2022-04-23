@@ -15,9 +15,9 @@ class OtpObject:
 
     def generate_pass(self, user, time_limit,otp_size):
         #Se limitan dígitos para caso de 4 caracteres.
-        random_chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
-        if (otp_size==4):
-            random_chars = string.digits
+        random_chars = string.digits
+        if (otp_size > 4):
+            random_chars += string.ascii_uppercase + string.ascii_lowercase
 
         self.otp_pass = ''.join([random.choice(random_chars)
                                  for n in range(otp_size)])

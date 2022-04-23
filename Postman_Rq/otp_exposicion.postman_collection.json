@@ -89,6 +89,35 @@
 			"response": []
 		},
 		{
+			"name": "show_otp",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\":\"cdmurcia81543@umanizales.edu.co\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/list_otp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"list_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "config_otp",
 			"request": {
 				"method": "PUT",

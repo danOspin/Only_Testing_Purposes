@@ -117,17 +117,22 @@ def list_otp_per_user():
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
-    response = user_service.generate_otp(data)
+    response = otp_service.get_all_by_filter({"type":"otp"})
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
 
 @app_user.route('/user/showotp', methods=['GET'])
 def get_otp_per_users():  # put application's code here
-    return Response(response=json.dumps(user_service.get_all()), status=200,
+    data = request.json
+    if data is None or data == {} or 'user_id' not in data:
+        return Response(response=json.dumps({"Error": "Please provide user_id"}),
+                        status=400,
+                        mimetype='application/json')
+    return Response(response=json.dumps(otp_service.show_otp_per_user(data['user_id'])), status=200,
                     mimetype='application/json')
 
-@app_user.route('/admin/config_otp_values', methods=['PUT'])
+@app_user.route('/user/config_otp_values', methods=['PUT'])
 def change_otp_values():
     data = request.json
     if data is None or data == {} or ('time_limit' and 'char_limit') not in data:
