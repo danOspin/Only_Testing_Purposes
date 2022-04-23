@@ -98,17 +98,13 @@ def generate_otp_per_user():
 @app_user.route('/user/validate_otp', methods=['PUT'])
 def validate_otp_per_user():
     data = request.json
-    if data is None or data == {} or 'user_id' not in data:
+    if data is None or data == {} or ('user_id' or 'otp') not in data:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
-    # Validamos que usuario exista
-
-    # Si existe llamamos al generador de otp y mandamos id
-    if (otp_service.has_active_otp(data['user_id']) == True):
-        response = otp_service.validate_otp(data['user_id'], data['otp'])
-    else:
-        response = {"message": "Se venció el tiempo, genere un nuevo OTP"}
+    # TODO: Validamos que usuario exista
+    # llamamos al generador de otp y mandamos id
+    response = otp_service.validate_otp(data['user_id'], data['otp'])
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
@@ -124,6 +120,11 @@ def list_otp_per_user():
     response = user_service.generate_otp(data)
     return Response(response=json.dumps(response),
                     status=200,
+                    mimetype='application/json')
+
+@app_user.route('/user/showotp', methods=['GET'])
+def get_otp_per_users():  # put application's code here
+    return Response(response=json.dumps(user_service.get_all()), status=200,
                     mimetype='application/json')
 
 @app_user.route('/admin/config_otp_values', methods=['PUT'])

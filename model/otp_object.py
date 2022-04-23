@@ -3,7 +3,7 @@ import datetime
 import random
 
 
-class OtpObject():
+class OtpObject:
     def __init__(self):
         self.user_id = None
         self.created_date = datetime.datetime.utcnow()
